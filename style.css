@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            rgba(35, 25, 20, 0.25),
+            rgba(35, 25, 20, 0.25)
+        ),
+        linear-gradient(
+            135deg,
+            #f8f0eb,
+            #ead9cd
+        );
+
+    color: #60483c;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.pagina {
+    width: 100%;
+    max-width: 520px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    width: 100%;
+
+    padding: 40px 30px;
+
+    background: rgba(255, 250, 246, 0.97);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================
+   CORAÇÃO
+========================= */
+
+.coracao {
+    margin-bottom: 5px;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 52px;
+
+    line-height: 1;
+
+    color: #a77b62;
+}
+
+/* =========================
+   FRASE SUPERIOR
+========================= */
+
+.frase {
+    margin-bottom: 15px;
+
+    color: #8d7565;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    text-transform: uppercase;
+
+    letter-spacing: 4px;
+}
+
+/* =========================
+   NOMES
+========================= */
+
+h1 {
+    margin: 0;
+
+    color: #60483c;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: clamp(44px, 11vw, 58px);
+
+    font-weight: 400;
+
+    line-height: 1.05;
+}
+
+h1 span {
+    display: block;
+
+    margin: 5px 0;
+
+    color: #a77b62;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 34px;
+
+    line-height: 1;
+}
+
+/* =========================
+   LINHA DECORATIVA
+========================= */
+
+.linha {
+    width: 80px;
+
+    height: 1px;
+
+    margin: 25px auto;
+
+    background: #b9957c;
+}
+
+/* =========================
+   TEXTOS
+========================= */
+
+.mensagem {
+    margin-bottom: 10px;
+
+    color: #60483c;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+.instrucao {
+    max-width: 400px;
+
+    margin: 0 auto 25px;
+
+    color: #806f64;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   ÁREA DA CÂMERA
+========================= */
+
+.camera-area {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    overflow: hidden;
+
+    background: #1e1a18;
+
+    border-radius: 18px;
+
+    position: relative;
+}
+
+video {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: 250px;
+
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    background: #1e1a18;
+}
+
+canvas {
+    display: none;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.botao {
+    width: 100%;
+
+    min-height: 52px;
+
+    margin-top: 10px;
+
+    padding: 14px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.botao:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 15px rgba(0, 0, 0, 0.12);
+}
+
+.botao:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.botao:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+/* =========================
+   BOTÃO ABRIR CÂMERA
+========================= */
+
+.botao-camera {
+    background: #60483c;
+
+    color: #ffffff;
+}
+
+/* =========================
+   BOTÃO TIRAR FOTO
+========================= */
+
+.botao-foto {
+    background: #a77b62;
+
+    color: #ffffff;
+}
+
+/* =========================
+   BOTÃO ENVIAR
+========================= */
+
+.botao-enviar {
+    background: #80624f;
+
+    color: #ffffff;
+}
+
+/* =========================
+   PRÉVIA DA FOTO
+========================= */
+
+#previewContainer {
+    display: none;
+
+    margin-top: 25px;
+
+    animation: aparecer 0.3s ease;
+}
+
+#previewContainer p {
+    margin-bottom: 10px;
+
+    color: #806f64;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+#preview {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    border-radius: 15px;
+
+    object-fit: cover;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    min-height: 22px;
+
+    margin-top: 18px;
+
+    color: #60483c;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.rodape {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    color: #a77b62;
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 25px;
+}
+
+.rodape span:nth-child(2) {
+    font-size: 18px;
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .pagina {
+        margin: 10px 0;
+    }
+
+    .card {
+        padding: 30px 18px;
+        border-radius: 20px;
+    }
+
+    .coracao {
+        font-size: 46px;
+    }
+
+    .frase {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    h1 {
+        font-size: 46px;
+    }
+
+    h1 span {
+        font-size: 30px;
+    }
+
+    .linha {
+        margin: 20px auto;
+    }
+
+    .mensagem {
+        font-size: 17px;
+    }
+
+    .instrucao {
+        font-size: 13px;
+    }
+
+    video {
+        min-height: 220px;
+    }
+
+    .botao {
+        min-height: 50px;
+        font-size: 14px;
+    }
+}
+
+/* =========================
+   CELULARES MUITO PEQUENOS
+========================= */
+
+@media (max-width: 360px) {
+
+    .card {
+        padding: 25px 15px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h1 span {
+        font-size: 27px;
+    }
+
+    .coracao {
+        font-size: 40px;
+    }
+
+    video {
+        min-height: 190px;
+    }
+}

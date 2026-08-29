@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(
+        rgba(35, 25, 20, 0.25),
+        rgba(35, 25, 20, 0.25)
+    ), linear-gradient(
+        135deg,
+        #f8f0eb,
+        #ead9cd
+    );
+    color: #60483c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* =========================
+   VIEWS
+========================= */
+
+.view {
+    width: 100%;
+    max-width: 520px;
+    animation: fadeIn 0.3s ease;
+}
+
+.view.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   QR CODE VIEW
+========================= */
+
+.qr-container {
+    background: rgba(255, 250, 246, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.qr-container h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    color: #a77b62;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.qr-subtitle {
+    color: #8d7565;
+    font-size: 14px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.qr-code-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.qr-code-box canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+.qr-info {
+    color: #806f64;
+    font-size: 13px;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.qr-info a {
+    color: #a77b62;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.qr-info a:hover {
+    color: #60483c;
+}
+
+/* =========================
+   CÂMERA VIEW
+========================= */
+
+.camera-container {
+    background: rgba(255, 250, 246, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    padding: 30px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #a77b62;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: color 0.2s ease;
+}
+
+.btn-back:hover {
+    color: #60483c;
+}
+
+.camera-container h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    color: #a77b62;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.camera-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background: #1e1a18;
+    border-radius: 15px;
+    position: relative;
+}
+
+#videoElement {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #1e1a18;
+}
+
+/* =========================
+   PREVIEW VIEW
+========================= */
+
+.preview-container {
+    background: rgba(255, 250, 246, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    padding: 30px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.preview-container h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    color: #a77b62;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px 18px;
+    min-height: 50px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.12);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #60483c;
+    color: white;
+}
+
+.btn-secondary {
+    background: #a77b62;
+    color: white;
+}
+
+.btn-success {
+    background: #80624f;
+    color: white;
+}
+
+/* =========================
+   STATUS MESSAGE
+========================= */
+
+.status-message {
+    min-height: 20px;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #806f64;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.status-message.success {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.status-message.error {
+    color: #f44336;
+    font-weight: 600;
+}
+
+.status-message.loading {
+    color: #ff9800;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 500px) {
+    body {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .qr-container,
+    .camera-container,
+    .preview-container {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+
+    .qr-container h1 {
+        font-size: 40px;
+    }
+
+    .camera-container h2,
+    .preview-container h2 {
+        font-size: 32px;
+    }
+
+    #videoElement {
+        min-height: 250px;
+    }
+
+    .btn {
+        min-height: 48px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .qr-container,
+    .camera-container,
+    .preview-container {
+        padding: 20px 12px;
+    }
+
+    .qr-container h1 {
+        font-size: 36px;
+    }
+
+    .camera-container h2,
+    .preview-container h2 {
+        font-size: 28px;
+    }
+
+    .qr-subtitle {
+        font-size: 12px;
+    }
+
+    #videoElement {
+        min-height: 200px;
+    }
+}
