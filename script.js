@@ -33,12 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gerar QR Code
     generateQRCode();
 
-    // Se veio pelo QR Code, abrir a câmera automaticamente
+    // Se veio pelo QR Code, mostrar câmera
     if (isFromQR) {
 
-        setTimeout(() => {
-            showCameraView();
-        }, 500);
+        showCameraView();
+
+    } else {
+
+        // Se não veio pelo QR, mostrar QR Code
+        showQRView();
 
     }
 
@@ -124,11 +127,15 @@ function showCameraView() {
         cameraArea.style.display = 'block';
     }
 
-    // Abrir câmera automaticamente
-    if (btnOpenCamera) {
+    // Verificar se veio do QR code
+    const params = new URLSearchParams(window.location.search);
+    const isFromQR = params.has('qr');
+
+    // Abrir câmera automaticamente se veio do QR
+    if (isFromQR && btnOpenCamera) {
         setTimeout(() => {
             openCamera();
-        }, 300);
+        }, 500);
     }
 
 }

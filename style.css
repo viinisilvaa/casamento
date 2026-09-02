@@ -193,6 +193,8 @@ h1 span {
     border-radius: 18px;
 
     position: relative;
+
+    display: none;
 }
 
 video {
