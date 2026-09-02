@@ -30,18 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const isFromQR = params.has('qr');
 
+    // Verificar se está na página de câmera
+    const isOnCameraPage =
+        window.location.pathname.includes('camera.html') ||
+        window.location.href.includes('camera.html');
+
     // Gerar QR Code
     generateQRCode();
 
-    // Se veio pelo QR Code, mostrar câmera
-    if (isFromQR) {
+    // Se está na página de câmera e veio pelo QR
+    if (isOnCameraPage && isFromQR) {
 
-        showCameraView();
-
-    } else {
-
-        // Se não veio pelo QR, mostrar QR Code
-        showQRView();
+        // Abrir câmera automaticamente
+        setTimeout(() => {
+            openCamera();
+        }, 500);
 
     }
 
@@ -74,9 +77,16 @@ function generateQRCode() {
     const currentURL =
         window.location.href.split('?')[0];
 
+    // Se estiver em index.html, gera QR para camera.html
+    // Se estiver em camera.html, gera QR para camera.html
+    let baseURL = currentURL.replace('index.html', 'camera.html');
+    if (!baseURL.includes('camera.html')) {
+        baseURL = currentURL.replace(/\/$/, '') + '/camera.html';
+    }
+
     // URL que será aberta pelo celular
     const qrURL =
-        currentURL + '?qr=1';
+        baseURL + '?qr=1';
 
     // Criar QR Code
     new QRCode(qrContainer, {
@@ -99,62 +109,6 @@ function generateQRCode() {
 
     if (directLink) {
         directLink.href = qrURL;
-    }
-
-}
-
-
-// ====================================
-// MOSTRAR/ESCONDER VIEWS
-// ====================================
-
-function showCameraView() {
-
-    const qrContainer =
-        document.getElementById('qrContainer');
-
-    const cameraArea =
-        document.querySelector('.camera-area');
-
-    const btnOpenCamera =
-        document.getElementById('abrirCamera');
-
-    if (qrContainer) {
-        qrContainer.style.display = 'none';
-    }
-
-    if (cameraArea) {
-        cameraArea.style.display = 'block';
-    }
-
-    // Verificar se veio do QR code
-    const params = new URLSearchParams(window.location.search);
-    const isFromQR = params.has('qr');
-
-    // Abrir câmera automaticamente se veio do QR
-    if (isFromQR && btnOpenCamera) {
-        setTimeout(() => {
-            openCamera();
-        }, 500);
-    }
-
-}
-
-
-function showQRView() {
-
-    const qrContainer =
-        document.getElementById('qrContainer');
-
-    const cameraArea =
-        document.querySelector('.camera-area');
-
-    if (qrContainer) {
-        qrContainer.style.display = 'block';
-    }
-
-    if (cameraArea) {
-        cameraArea.style.display = 'none';
     }
 
 }

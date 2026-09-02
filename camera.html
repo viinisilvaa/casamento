@@ -7,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Jucemara & César Vinicius</title>
+    <title>Tire sua foto - Jucemara & César</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -43,23 +43,7 @@
                 esse momento especial conosco.
             </p>
 
-            <div id="qrContainer" 
-                 class="qr-container">
-                
-                <div id="qrCode" 
-                     class="qr-code-box">
-                </div>
-
-                <p class="qr-info">
-                    Ou acesse direto: 
-                    <a id="directLink" 
-                       href="#" 
-                       target="_blank">clique aqui</a>
-                </p>
-
-            </div>
-
-            <div class="camera-area" style="display: none;">
+            <div class="camera-area">
 
                 <video id="camera"
                        autoplay
@@ -72,8 +56,7 @@
 
             <button
                 id="abrirCamera"
-                class="botao botao-camera"
-                style="display: none;">
+                class="botao botao-camera">
 
                 📷 Abrir câmera
 
@@ -82,7 +65,7 @@
             <button
                 id="tirarFoto"
                 class="botao botao-foto"
-                style="display: none;">
+                disabled>
 
                 📸 Tirar foto
 
@@ -90,8 +73,7 @@
 
             <div
                 id="previewContainer"
-                class="preview-container"
-                style="display: none;">
+                class="preview-container">
 
                 <p>
                     Sua foto
@@ -106,7 +88,7 @@
             <button
                 id="enviarFoto"
                 class="botao botao-enviar"
-                style="display: none;">
+                disabled>
 
                 💕 Compartilhar foto
 
@@ -129,7 +111,6 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
 
 </body>
