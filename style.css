@@ -216,6 +216,62 @@ canvas {
 }
 
 /* =========================
+   QR CODE
+========================= */
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    animation: aparecer 0.3s ease;
+}
+
+.qr-code-box {
+    margin-bottom: 15px;
+}
+
+.qr-code-box canvas {
+    display: block;
+}
+
+.qr-info {
+    text-align: center;
+
+    font-size: 14px;
+
+    color: #60483c;
+
+    line-height: 1.5;
+}
+
+.qr-info a {
+    color: #806f64;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.qr-info a:hover {
+    color: #60483c;
+    text-decoration: underline;
+}
+
+/* =========================
    BOTÕES
 ========================= */
 

@@ -43,6 +43,23 @@
                 esse momento especial conosco.
             </p>
 
+            <div id="qrContainer" 
+                 class="qr-container"
+                 style="display: none;">
+                
+                <div id="qrCode" 
+                     class="qr-code-box">
+                </div>
+
+                <p class="qr-info">
+                    Ou acesse direto: 
+                    <a id="directLink" 
+                       href="#" 
+                       target="_blank">clique aqui</a>
+                </p>
+
+            </div>
+
             <div class="camera-area">
 
                 <video id="camera"
@@ -111,6 +128,7 @@
 
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
 
 </body>

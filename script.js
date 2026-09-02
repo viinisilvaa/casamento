@@ -26,10 +26,131 @@ document.addEventListener('DOMContentLoaded', () => {
     camera = document.getElementById('camera');
     canvas = document.getElementById('canvas');
 
+    // Verificar se chegou através do QR Code
+    const params = new URLSearchParams(window.location.search);
+    const isFromQR = params.has('qr');
+
+    // Gerar QR Code
+    generateQRCode();
+
+    // Se veio pelo QR Code, abrir a câmera automaticamente
+    if (isFromQR) {
+
+        setTimeout(() => {
+            showCameraView();
+        }, 500);
+
+    }
+
     // Configurar botões
     setupEventListeners();
 
 });
+
+
+// ====================================
+// GERAR QR CODE
+// ====================================
+
+function generateQRCode() {
+
+    const qrContainer =
+        document.getElementById('qrCode');
+
+    if (!qrContainer) {
+        console.error(
+            'Elemento qrCode não encontrado.'
+        );
+        return;
+    }
+
+    // Limpar QR anterior
+    qrContainer.innerHTML = '';
+
+    // URL atual sem parâmetros
+    const currentURL =
+        window.location.href.split('?')[0];
+
+    // URL que será aberta pelo celular
+    const qrURL =
+        currentURL + '?qr=1';
+
+    // Criar QR Code
+    new QRCode(qrContainer, {
+
+        text: qrURL,
+
+        width: 250,
+
+        height: 250,
+
+        colorDark: '#60483c',
+
+        colorLight: '#ffffff'
+
+    });
+
+    // Link direto
+    const directLink =
+        document.getElementById('directLink');
+
+    if (directLink) {
+        directLink.href = qrURL;
+    }
+
+}
+
+
+// ====================================
+// MOSTRAR/ESCONDER VIEWS
+// ====================================
+
+function showCameraView() {
+
+    const qrContainer =
+        document.getElementById('qrContainer');
+
+    const cameraArea =
+        document.querySelector('.camera-area');
+
+    const btnOpenCamera =
+        document.getElementById('abrirCamera');
+
+    if (qrContainer) {
+        qrContainer.style.display = 'none';
+    }
+
+    if (cameraArea) {
+        cameraArea.style.display = 'block';
+    }
+
+    // Abrir câmera automaticamente
+    if (btnOpenCamera) {
+        setTimeout(() => {
+            openCamera();
+        }, 300);
+    }
+
+}
+
+
+function showQRView() {
+
+    const qrContainer =
+        document.getElementById('qrContainer');
+
+    const cameraArea =
+        document.querySelector('.camera-area');
+
+    if (qrContainer) {
+        qrContainer.style.display = 'block';
+    }
+
+    if (cameraArea) {
+        cameraArea.style.display = 'none';
+    }
+
+}
 
 
 // ====================================
