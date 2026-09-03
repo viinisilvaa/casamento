@@ -305,7 +305,7 @@ async function openCamera() {
         camera.srcObject = stream;
 
         if (cameraArea) {
-            cameraArea.style.display = 'block';
+            cameraArea.classList.add('camera-aberta');
         }
 
         // Esperar vídeo carregar
@@ -526,7 +526,7 @@ function takePicture() {
                     document.querySelector('.camera-area');
 
                 if (cameraArea) {
-                    cameraArea.style.display = 'none';
+                    cameraArea.classList.remove('camera-aberta');
                 }
 
                 // Mostrar preview container
@@ -920,7 +920,7 @@ function resetCameraInterface() {
     }
 
     if (cameraArea) {
-        cameraArea.style.display = 'none';
+        cameraArea.classList.remove('camera-aberta');
     }
 
     // Limpar preview
