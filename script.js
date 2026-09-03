@@ -250,6 +250,9 @@ async function openCamera() {
         const btnToggleCamera =
             document.getElementById('alternarCamera');
 
+        const cameraArea =
+            document.querySelector('.camera-area');
+
         // Desabilitar botão
         if (btnToggleCamera) {
             btnToggleCamera.disabled = true;
@@ -300,6 +303,10 @@ async function openCamera() {
 
         // Colocar câmera no vídeo
         camera.srcObject = stream;
+
+        if (cameraArea) {
+            cameraArea.style.display = 'block';
+        }
 
         // Esperar vídeo carregar
         await new Promise(
@@ -514,6 +521,13 @@ function takePicture() {
 
                 // Parar câmera
                 stopCamera();
+
+                const cameraArea =
+                    document.querySelector('.camera-area');
+
+                if (cameraArea) {
+                    cameraArea.style.display = 'none';
+                }
 
                 // Mostrar preview container
                 const previewContainer =
@@ -876,6 +890,9 @@ function resetCameraInterface() {
     const previewContainer =
         document.getElementById('previewContainer');
 
+    const cameraArea =
+        document.querySelector('.camera-area');
+
     const galleryInput =
         document.getElementById('galeriaFoto');
 
@@ -900,6 +917,10 @@ function resetCameraInterface() {
 
     if (previewContainer) {
         previewContainer.style.display = 'none';
+    }
+
+    if (cameraArea) {
+        cameraArea.style.display = 'none';
     }
 
     // Limpar preview
