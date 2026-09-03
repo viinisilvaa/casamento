@@ -4,7 +4,7 @@
 
 // URL da implantação do seu Google Apps Script
 const GOOGLE_APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbwORG8lRvY0sRwQ5z-kzyrSrsmujyPPNxoEU4bBK-Es-3z8HNucNAyMlx6JqIwlGJOD/exec';
+    'https://script.google.com/macros/s/AKfycbzUW1xtax6uFvR2ajBewnGfQZnpwl9drQuegGLfFzoakJUQ9IdRnhEXinsftOU8oQ/exec';
 
 
 // ====================================
@@ -638,8 +638,8 @@ async function uploadToGoogleDrive() {
         );
 
         console.log(
-            '📸 Foto salva no Google Drive:',
-            result
+            '📸 Requisição enviada para o Google Drive:',
+            response.type
         );
 
         // Limpar foto
