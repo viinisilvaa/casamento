@@ -4,7 +4,7 @@
 
 // URL da implantação do seu Google Apps Script
 const GOOGLE_APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbzUW1xtax6uFvR2ajBewnGfQZnpwl9drQuegGLfFzoakJUQ9IdRnhEXinsftOU8oQ/exec';
+    'https://script.google.com/macros/s/AKfycbzmg8sbeZcsCM0nlMDQ3nMOFw8iLtkuboRTocBvoDcxgCAx7F5zl4XE7kkPXoRBrYqe/exec';
 
 
 // ====================================
@@ -633,7 +633,7 @@ async function uploadToGoogleDrive() {
 
         // Sucesso
         updateStatus(
-            '✅ Foto enviada com sucesso! Obrigado! 💕',
+            '✅ Foto enviada ao Apps Script! Obrigado! 💕',
             'success'
         );
 
@@ -775,19 +775,26 @@ function resetCameraInterface() {
     const previewContainer =
         document.getElementById('previewContainer');
 
+    const galleryInput =
+        document.getElementById('galeriaFoto');
+
     if (btnOpenCamera) {
         btnOpenCamera.style.display = 'block';
         btnOpenCamera.disabled = false;
     }
 
     if (btnTakePicture) {
-        btnTakePicture.disabled = true;
+        btnTakePicture.disabled = Boolean(btnOpenCamera);
     }
 
     if (btnUpload) {
-        btnUpload.disabled = true;
+        btnUpload.disabled = !galleryInput;
         delete btnUpload.dataset.galleryReady;
         btnUpload.textContent = 'abrir galeria';
+    }
+
+    if (galleryInput) {
+        galleryInput.value = '';
     }
 
     if (previewContainer) {
