@@ -38,16 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gerar QR Code
     generateQRCode();
 
-    // Se está na página de câmera e veio pelo QR
-    if (isOnCameraPage && isFromQR) {
-
-        // Abrir câmera automaticamente
-        setTimeout(() => {
-            openCamera();
-        }, 500);
-
-    }
-
     // Configurar botões
     setupEventListeners();
 
@@ -138,7 +128,16 @@ function setupEventListeners() {
     if (btnTakePicture) {
         btnTakePicture.addEventListener(
             'click',
-            takePicture
+            () => {
+
+                if (!stream) {
+                    openCamera();
+                    return;
+                }
+
+                takePicture();
+
+            }
         );
     }
 
@@ -146,12 +145,82 @@ function setupEventListeners() {
     const btnUpload =
         document.getElementById('enviarFoto');
 
+    const galleryInput =
+        document.getElementById('galeriaFoto');
+
     if (btnUpload) {
         btnUpload.addEventListener(
             'click',
-            uploadToGoogleDrive
+            () => {
+
+                if (galleryInput && btnUpload.dataset.galleryReady !== 'true') {
+                    galleryInput.click();
+                    return;
+                }
+
+                uploadToGoogleDrive();
+
+            }
         );
     }
+
+    if (galleryInput) {
+        galleryInput.addEventListener(
+            'change',
+            handleGallerySelection
+        );
+    }
+
+}
+
+
+// ====================================
+// SELECIONAR FOTO DA GALERIA
+// ====================================
+
+function handleGallerySelection(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    photoData = file;
+
+    const preview =
+        document.getElementById('preview');
+
+    if (preview) {
+        if (preview.dataset.objectUrl) {
+            URL.revokeObjectURL(preview.dataset.objectUrl);
+        }
+
+        const imageURL = URL.createObjectURL(file);
+        preview.src = imageURL;
+        preview.dataset.objectUrl = imageURL;
+    }
+
+    const previewContainer =
+        document.getElementById('previewContainer');
+
+    const btnUpload =
+        document.getElementById('enviarFoto');
+
+    if (previewContainer) {
+        previewContainer.style.display = 'block';
+    }
+
+    if (btnUpload) {
+        btnUpload.dataset.galleryReady = 'true';
+        btnUpload.textContent = '💕 Compartilhar foto';
+        btnUpload.disabled = false;
+    }
+
+    updateStatus(
+        '✅ Foto escolhida! Clique em compartilhar.',
+        'success'
+    );
 
 }
 
@@ -426,6 +495,8 @@ function takePicture() {
                     document.getElementById('enviarFoto');
 
                 if (btnUpload) {
+                    btnUpload.dataset.galleryReady = 'true';
+                    btnUpload.textContent = '💕 Compartilhar foto';
                     btnUpload.disabled = false;
                 }
 
@@ -553,38 +624,12 @@ async function uploadToGoogleDrive() {
 
                     method: 'POST',
 
+                    mode: 'no-cors',
+
                     body: formData
 
                 }
             );
-
-        // Verificar resposta HTTP
-        if (!response.ok) {
-
-            throw new Error(
-                `Erro HTTP ${response.status}`
-            );
-
-        }
-
-        // Ler resposta
-        const result =
-            await response.json();
-
-        console.log(
-            'Resposta do Google Apps Script:',
-            result
-        );
-
-        // Verificar sucesso
-        if (!result.sucesso) {
-
-            throw new Error(
-                result.mensagem ||
-                'O Google Apps Script recusou o envio.'
-            );
-
-        }
 
         // Sucesso
         updateStatus(
@@ -741,6 +786,8 @@ function resetCameraInterface() {
 
     if (btnUpload) {
         btnUpload.disabled = true;
+        delete btnUpload.dataset.galleryReady;
+        btnUpload.textContent = 'abrir galeria';
     }
 
     if (previewContainer) {

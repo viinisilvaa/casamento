@@ -55,17 +55,8 @@
             </div>
 
             <button
-                id="abrirCamera"
-                class="botao botao-camera">
-
-                📷 Abrir câmera
-
-            </button>
-
-            <button
                 id="tirarFoto"
-                class="botao botao-foto"
-                disabled>
+                class="botao botao-foto">
 
                 📸 Tirar foto
 
@@ -87,12 +78,17 @@
 
             <button
                 id="enviarFoto"
-                class="botao botao-enviar"
-                disabled>
+                class="botao botao-enviar">
 
-                💕 Compartilhar foto
+                abrir galeria
 
             </button>
+
+            <input
+                id="galeriaFoto"
+                type="file"
+                accept="image/*"
+                hidden>
 
             <p
                 id="status"
