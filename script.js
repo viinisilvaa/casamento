@@ -15,6 +15,7 @@ let camera;
 let canvas;
 let stream = null;
 let photoData = null;
+let currentFacingMode = 'environment';
 
 
 // ====================================
@@ -141,6 +142,16 @@ function setupEventListeners() {
         );
     }
 
+    const btnToggleCamera =
+        document.getElementById('alternarCamera');
+
+    if (btnToggleCamera) {
+        btnToggleCamera.addEventListener(
+            'click',
+            toggleCamera
+        );
+    }
+
     // Botão enviar foto
     const btnUpload =
         document.getElementById('enviarFoto');
@@ -233,15 +244,15 @@ async function openCamera() {
 
     try {
 
-        const btnOpenCamera =
-            document.getElementById('abrirCamera');
-
         const btnTakePicture =
             document.getElementById('tirarFoto');
 
+        const btnToggleCamera =
+            document.getElementById('alternarCamera');
+
         // Desabilitar botão
-        if (btnOpenCamera) {
-            btnOpenCamera.disabled = true;
+        if (btnToggleCamera) {
+            btnToggleCamera.disabled = true;
         }
 
         updateStatus(
@@ -259,18 +270,7 @@ async function openCamera() {
             );
         }
 
-        // Detectar celular
-        const isMobile =
-            /iPhone|iPad|iPod|Android/i.test(
-                navigator.userAgent
-            );
-
-        // Celular = câmera traseira
-        // Computador = câmera frontal
-        const facingMode =
-            isMobile
-                ? 'environment'
-                : 'user';
+        stopCamera();
 
         // Solicitar câmera
         stream =
@@ -281,7 +281,7 @@ async function openCamera() {
                     video: {
 
                         facingMode: {
-                            ideal: facingMode
+                            ideal: currentFacingMode
                         },
 
                         width: {
@@ -327,9 +327,9 @@ async function openCamera() {
             btnTakePicture.disabled = false;
         }
 
-        // Esconder botão abrir câmera
-        if (btnOpenCamera) {
-            btnOpenCamera.style.display = 'none';
+        if (btnToggleCamera) {
+            btnToggleCamera.disabled = false;
+            updateCameraToggleLabel();
         }
 
     } catch (error) {
@@ -360,11 +360,44 @@ async function openCamera() {
             'error'
         );
 
-        if (document.getElementById('abrirCamera')) {
-            document.getElementById('abrirCamera').disabled = false;
+        if (document.getElementById('alternarCamera')) {
+            document.getElementById('alternarCamera').disabled = false;
         }
 
     }
+
+}
+
+
+// ====================================
+// ALTERNAR CÂMERA
+// ====================================
+
+async function toggleCamera() {
+
+    currentFacingMode =
+        currentFacingMode === 'environment'
+            ? 'user'
+            : 'environment';
+
+    await openCamera();
+
+}
+
+
+function updateCameraToggleLabel() {
+
+    const btnToggleCamera =
+        document.getElementById('alternarCamera');
+
+    if (!btnToggleCamera) {
+        return;
+    }
+
+    btnToggleCamera.textContent =
+        currentFacingMode === 'environment'
+            ? '🔄 Usar câmera frontal'
+            : '🔄 Usar câmera traseira';
 
 }
 
@@ -579,9 +612,12 @@ async function uploadToGoogleDrive() {
             'loading'
         );
 
+        const fotoComprimida =
+            await compressImage(photoData);
+
         // Converter foto para Base64
         const base64 =
-            await blobToBase64(photoData);
+            await blobToBase64(fotoComprimida);
 
         // Remover: data:image/jpeg;base64,
         const base64Data =
@@ -676,6 +712,71 @@ async function uploadToGoogleDrive() {
         }
 
     }
+
+}
+
+
+// ====================================
+// COMPRIMIR FOTO ANTES DO ENVIO
+// ====================================
+
+function compressImage(blob) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const image = new Image();
+            const imageURL = URL.createObjectURL(blob);
+
+            image.onload = () => {
+
+                URL.revokeObjectURL(imageURL);
+
+                const maxSize = 1600;
+                const scale = Math.min(
+                    1,
+                    maxSize / Math.max(image.width, image.height)
+                );
+
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.max(1, Math.round(image.width * scale));
+                canvas.height = Math.max(1, Math.round(image.height * scale));
+
+                const context = canvas.getContext('2d');
+                context.drawImage(
+                    image,
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                canvas.toBlob(
+                    compressedBlob => {
+
+                        if (!compressedBlob) {
+                            reject(new Error('Não foi possível otimizar a foto.'));
+                            return;
+                        }
+
+                        resolve(compressedBlob);
+
+                    },
+                    'image/jpeg',
+                    0.75
+                );
+
+            };
+
+            image.onerror = () => {
+                URL.revokeObjectURL(imageURL);
+                reject(new Error('Não foi possível ler a foto.'));
+            };
+
+            image.src = imageURL;
+
+        }
+    );
 
 }
 
