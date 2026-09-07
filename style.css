@@ -217,6 +217,10 @@ video {
     background: #1e1a18;
 }
 
+video.camera-frontal {
+    transform: scaleX(-1);
+}
+
 canvas {
     display: none;
 }

@@ -4,7 +4,7 @@
 
 // URL da implantação do seu Google Apps Script
 const GOOGLE_APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbzmg8sbeZcsCM0nlMDQ3nMOFw8iLtkuboRTocBvoDcxgCAx7F5zl4XE7kkPXoRBrYqe/exec';
+    'https://script.google.com/macros/s/AKfycbx6qVhmWxymxg8gkBCvc5Qa9XYbPjXgmQzAdwRw6XQ5rpO1Y2lY0aWQd87n6UHsTxWy/exec';
 
 
 // ====================================
@@ -303,6 +303,10 @@ async function openCamera() {
 
         // Colocar câmera no vídeo
         camera.srcObject = stream;
+        camera.classList.toggle(
+            'camera-frontal',
+            currentFacingMode === 'user'
+        );
 
         if (cameraArea) {
             cameraArea.classList.add('camera-aberta');
@@ -463,19 +467,22 @@ function takePicture() {
         canvas.height = camera.videoHeight;
 
         // Desenhar imagem
+        context.save();
+
+        if (currentFacingMode === 'user') {
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
+        }
+
         context.drawImage(
-
             camera,
-
             0,
-
             0,
-
             canvas.width,
-
             canvas.height
-
         );
+
+        context.restore();
 
         // Converter para JPEG
         canvas.toBlob(
